@@ -173,7 +173,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  backgroundcolor: #eff6ff;
+  background-color: #eff6ff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -201,7 +201,7 @@ body {
   background-color: #f8fafc;
   color: #64748b;
   border: 1px solid #e2e8f0;
-  borderradius: 8px;
+  border-radius: 8px;
   display: flex;
   transition: all 0.2s;
 }
