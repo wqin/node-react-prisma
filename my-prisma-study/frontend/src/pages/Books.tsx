@@ -10,7 +10,8 @@ import {
   Hash,
 } from "lucide-react";
 
-const API_URL = "http://localhost:5001/api/books";
+const API_BASE = (import.meta.env.VITE_API_URL as string) || "http://localhost:5001";
+const API_URL = `${API_BASE.replace(/\/$/, "")}/api/books`;
 
 interface Book {
   id: number;
