@@ -31,6 +31,9 @@
     "@prisma/client": "^7.4.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
+    "helmet": "^6.0.0",
+    "morgan": "^1.10.0",
+    "express-rate-limit": "^7.0.0",
     "express": "^5.1.0",
     "pg": "^8.19.0"
   }

@@ -39,7 +39,26 @@ export default function Books() {
     setLoading(true);
     try {
       const response = await axios.get(API_URL);
-      setBooks(response.data);
+      const payload =
+        response && response.data && response.data.data !== undefined
+          ? response.data.data
+          : response.data;
+      if (
+        response &&
+        response.data &&
+        typeof response.data.code !== "undefined"
+      ) {
+        if (response.data.code !== 1) {
+          const apiMessage =
+            response.data.message || "请检查后端服务或数据库连接配置";
+          alert(`无法获取书籍列表：${apiMessage}`);
+          setBooks([]);
+        } else {
+          setBooks(payload);
+        }
+      } else {
+        setBooks(payload);
+      }
     } catch (error) {
       console.error("Error fetching books:", error);
       if (axios.isAxiosError(error)) {
