@@ -19,8 +19,57 @@ model Book {
   title     String
   quantity  Int      @default(1)
   description String?
+  authorId  Int
+  author    Author   @relation(fields: [authorId], references: [id])
+  borrowRecords BookBorrowRecord[]
   lastOperation String?
   lastOperationAt DateTime?
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
+
+model Author {
+  id        Int      @id @default(autoincrement())
+  name      String @unique
+  books     Book[]
+}
+
+// 定义一个新表，记录用户信息
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  borrowRecords BookBorrowRecord[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum BorrowStatus {
+  BORROWED
+  RETURNED
+  OVERDUE
+  LOST
+}
+
+model BookBorrowRecord {
+  id               Int          @id @default(autoincrement())
+  userId           Int
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId           Int
+  book             Book         @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  quantity         Int          @default(1)
+  status           BorrowStatus @default(BORROWED)
+  borrowedAt       DateTime     @default(now())
+  dueAt            DateTime?
+  returnedAt       DateTime?
+  note             String?
+  lastOperation    String?
+  lastOperationAt  DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([bookId])
+}
+
+

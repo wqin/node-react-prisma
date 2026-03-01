@@ -33,13 +33,8 @@ app.get("/api/books", async (req, res) => {
   try {
     const books = await prisma.book.findMany({
       orderBy: { createdAt: "desc" },
-      select: {
-        id: true,
-        title: true,
-        quantity: true,
-        description: true,
-        createdAt: true,
-        updatedAt: true,
+      include: {
+        author: true,
       },
     });
     // const books = await prisma.book.findMany({
@@ -48,6 +43,41 @@ app.get("/api/books", async (req, res) => {
     res.json(books);
   } catch (error) {
     console.error("GET /api/books failed:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/author", async (req, res) => {
+  const { name, bookname } = req.query;
+
+  try {
+    const cleanName = name ? String(name).trim() : "";
+    const cleanBookName = bookname ? String(bookname).trim() : "";
+
+    const where = {
+      ...(cleanName && { name: { contains: cleanName, mode: "insensitive" } }),
+      ...(cleanBookName && {
+        books: {
+          some: {
+            title: { contains: cleanBookName, mode: "insensitive" },
+          },
+        },
+      }),
+    };
+
+    const author = await prisma.author.findMany({
+      where,
+      include: {
+        books: {
+          take: 5,
+          orderBy: { createdAt: "desc" },
+          select: { title: true },
+        },
+      },
+    });
+    res.json(author);
+  } catch (error) {
+    console.error("GET /api/author failed:", error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -77,20 +107,19 @@ app.get("/api/books/:id", async (req, res) => {
 
 // Create a new book
 app.post("/api/books", async (req, res) => {
-  const { title, quantity, description } = req.body;
+  const { title, quantity, author, description } = req.body;
   try {
     const book = await prisma.book.create({
       data: {
         title,
-        quantity: parseInt(quantity) || 1,
-      },
-      select: {
-        id: true,
-        title: true,
-        quantity: true,
-        description: true,
-        createdAt: true,
-        updatedAt: true,
+        quantity: parseInt(quantity),
+        description,
+        author: {
+          connectOrCreate: {
+            where: { name: author },
+            create: { name: author },
+          },
+        },
       },
     });
     res.status(201).json(book);

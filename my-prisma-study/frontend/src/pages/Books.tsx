@@ -16,6 +16,7 @@ interface Book {
   id: number;
   title: string;
   quantity: number;
+  author?: string | { id: number; name: string };
   updatedAt: string;
 }
 
@@ -23,9 +24,11 @@ export default function Books() {
   const [books, setBooks] = useState<Book[]>([]);
   const [newTitle, setNewTitle] = useState("");
   const [newQuantity, setNewQuantity] = useState(1);
+  const [newAuthor, setNewAuthor] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editQuantity, setEditQuantity] = useState(0);
+  const [editAuthor, setEditAuthor] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -57,9 +60,14 @@ export default function Books() {
     e.preventDefault();
     if (!newTitle.trim()) return;
     try {
-      await axios.post(API_URL, { title: newTitle, quantity: newQuantity });
+      await axios.post(API_URL, {
+        title: newTitle,
+        quantity: newQuantity,
+        author: newAuthor,
+      });
       setNewTitle("");
       setNewQuantity(1);
+      setNewAuthor("");
       fetchBooks();
     } catch (error) {
       console.error("Error adding book:", error);
@@ -81,6 +89,9 @@ export default function Books() {
     setEditingId(book.id);
     setEditTitle(book.title);
     setEditQuantity(book.quantity);
+    setEditAuthor(
+      typeof book.author === "string" ? book.author : (book.author?.name ?? ""),
+    );
   };
 
   const cancelEdit = () => {
@@ -93,6 +104,7 @@ export default function Books() {
       await axios.put(`${API_URL}/${id}`, {
         title: editTitle,
         quantity: editQuantity,
+        author: editAuthor,
       });
       setEditingId(null);
       fetchBooks();
@@ -124,6 +136,18 @@ export default function Books() {
                 placeholder="请输入书名..."
                 className="input"
                 required
+              />
+            </div>
+          </div>
+          <div>
+            <label className="form-label">作者</label>
+            <div className="input-container">
+              <input
+                type="text"
+                value={newAuthor}
+                onChange={(e) => setNewAuthor(e.target.value)}
+                placeholder="请输入作者姓名..."
+                className="input"
               />
             </div>
           </div>
@@ -176,6 +200,15 @@ export default function Books() {
                         autoFocus
                       />
                     </div>
+                    <div className="edit-input-author">
+                      <input
+                        type="text"
+                        value={editAuthor}
+                        onChange={(e) => setEditAuthor(e.target.value)}
+                        className="edit-input-field"
+                        placeholder="作者"
+                      />
+                    </div>
                     <div className="edit-input-quantity">
                       <input
                         type="number"
@@ -211,6 +244,12 @@ export default function Books() {
                       </div>
                       <div>
                         <h4 className="book-title-text">{book.title}</h4>
+                        <div className="book-author-text">
+                          作者:{" "}
+                          {typeof book.author === "string"
+                            ? book.author
+                            : (book.author?.name ?? "未知")}
+                        </div>
                         <div className="book-meta-info">
                           <span
                             className={`book-badge ${book.quantity > 0 ? "badge-in" : "badge-out"}`}
