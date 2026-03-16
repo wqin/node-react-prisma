@@ -1,0 +1,47 @@
+export type Theme = { [varName: string]: string };
+
+export const darkTheme: Theme = {
+  "--bg": "#0f1724",
+  "--surface": "#0b1220",
+  "--bg-end": "#071021",
+  "--muted": "#99a0b3",
+  "--text": "#e6eef8",
+  "--accent": "#57b0ff",
+  "--accent-2": "#86f3c3",
+  "--glass": "rgba(255,255,255,0.04)",
+  "--border": "rgba(255,255,255,0.04)",
+  "--btn-bg": "linear-gradient(180deg, var(--accent), var(--accent-2))",
+  "--btn-text": "#041226",
+  "--radius-sm": "8px",
+  "--radius-md": "12px",
+  "--radius-lg": "16px",
+  "--shadow-1": "0 6px 18px rgba(2,6,23,0.6)",
+  "--shadow-2": "0 10px 30px rgba(2,6,23,0.75)",
+  "--space-1": "8px",
+  "--space-2": "16px",
+  "--space-3": "24px",
+};
+
+export const lightTheme: Theme = {
+  "--bg": "#f3f6f9",
+  "--bg-end": "#e9eef5",
+  "--surface": "#ffffff",
+  "--muted": "#6b7280",
+  "--text": "#081426",
+  "--accent": "#1f6feb",
+  "--accent-2": "#14b8a6",
+  "--glass": "rgba(2,6,23,0.03)",
+  "--border": "rgba(15,23,36,0.06)",
+  "--btn-bg":
+    "linear-gradient(180deg, rgba(31,111,235,0.08), rgba(31,111,235,0.02))",
+  "--btn-text": "var(--accent)",
+  "--btn-border": "rgba(31,111,235,0.12)",
+  "--radius-sm": "8px",
+  "--radius-md": "12px",
+  "--radius-lg": "16px",
+  "--shadow-1": "0 6px 18px rgba(15,23,36,0.06)",
+  "--shadow-2": "0 10px 30px rgba(15,23,36,0.08)",
+  "--space-1": "8px",
+  "--space-2": "16px",
+  "--space-3": "24px",
+};

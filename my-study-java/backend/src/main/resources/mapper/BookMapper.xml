@@ -9,23 +9,28 @@
     <result property="title" column="title" />
     <result property="author" column="author" />
     <result property="description" column="description" />
+    <result property="number" column="number" />
+    <result property="createdAt" column="created_at" />
+    <result property="updatedAt" column="updated_at" />
   </resultMap>
 
   <select id="findAll" resultMap="BookResult">
-    SELECT id, title, author, description FROM book
+    SELECT id, title, author, description, number, created_at, updated_at FROM book
   </select>
 
   <select id="findById" parameterType="long" resultMap="BookResult">
-    SELECT id, title, author, description FROM book WHERE id = #{id}
+    SELECT id, title, author, description, number, created_at, updated_at FROM book WHERE id = #{id}
   </select>
 
   <insert id="insert" parameterType="com.example.library.model.Book" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO book (title, author, description)
-    VALUES (#{title}, #{author}, #{description})
+    INSERT INTO book (title, author, description, number, created_at, updated_at)
+    VALUES (#{title}, #{author}, #{description}, #{number}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
   </insert>
 
   <update id="update" parameterType="com.example.library.model.Book">
-    UPDATE book SET title=#{title}, author=#{author}, description=#{description} WHERE id=#{id}
+    UPDATE book
+    SET title=#{title}, author=#{author}, description=#{description}, number=#{number}, updated_at=CURRENT_TIMESTAMP
+    WHERE id=#{id}
   </update>
 
   <delete id="delete" parameterType="long">

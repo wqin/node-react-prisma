@@ -1,0 +1,23 @@
+{
+  "skill_name": "explain-code",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "解释以下 DAO 方法：\npublic Optional<Book> findByIsbn(String isbn) {\n    if (isbn == null || isbn.isBlank()) return Optional.empty();\n    return repository.findByIsbn(isbn);\n}\n要求：给出目的、输入/输出、逐行解释、可替代实现与测试建议",
+      "expected_output": "清楚地说明方法目的、参数校验逻辑、为何返回 Optional、以及如何测试边界条件",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "用类比和时序图解释 CompletableFuture 的执行流程：一个异步任务在独立线程中完成，然后在主线程合并结果。指出可能的并发陷阱与调试建议。",
+      "expected_output": "包含类比（例如叫号机）、mermaid 时序图或流程图、并发陷阱（死锁/竞态/异常吞掉）及调试/测试建议",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "为 Spring Boot 的请求处理链生成 mermaid 流程图并逐步解释每一层（DispatcherServlet -> Controller -> Service -> Repository -> DB），并给出单元/集成测试点。",
+      "expected_output": "输出可渲染的 mermaid 流程图代码块，逐步讲解每一层的职责、常见错误与测试建议",
+      "files": []
+    }
+  ]
+}

@@ -1,6 +1,10 @@
 ---
 name: explain-code
-description: 使用视觉图表和类比来解释代码。当解释代码工作原理、教授代码库或用户问"这是如何工作的？"时使用
+description: 使用视觉图表、类比和分步讲解把代码与架构解释清楚。遇到“这段代码怎么工作”、“帮我理解这个类/方法/模块”，或用户要求“用类比/图表解释”时务必触发此技能。
+compatibility:
+  - mermaid
+  - ascii
+  - image-diagrams
 ---
 
 # 代码解释专家
@@ -41,6 +45,34 @@ description: 使用视觉图表和类比来解释代码。当解释代码工作�
 ---
 
 **语气要求**：像和朋友聊天一样，避免过度学术化的表达。
+
+## 兼容性与可视化建议
+
+- 首选：`mermaid` 图表（流程图、时序图、类图）。在可以渲染的环境中，输出 mermaid 代码块以便自动渲染交互式图表。
+- 备用：ASCII 流程图在纯文本环境中仍然有用，但请尽量保持简洁。
+- 可选：当需要更精美的示意图时，输出可供图像生成器使用的结构化描述（例如节点/连线清单），以便后续渲染为 PNG/SVG。
+
+示例（mermaid 流程图）：
+
+```mermaid
+flowchart LR
+  Client -->|HTTP GET| DispatcherServlet
+  DispatcherServlet --> HandlerMapping
+  HandlerMapping --> Controller
+  Controller --> Service
+  Service --> Repository
+  Repository --> DB
+```
+
+## 测试用例示例
+
+请把这些示例保存到 `evals/explain-code-evals.json` 用于后续迭代测试：
+
+1. 解释 `findByIsbn` DAO 方法（短方法、参数校验、Optional 返回）。
+2. 用类比和时序图解释 `CompletableFuture` 异步链的执行流程，并指出常见并发陷阱。
+3. 针对一个 Spring Boot 请求处理链（DispatcherServlet -> Controller -> Service -> Repository -> DB）生成 mermaid 流程图并逐步解释每个环节的职责与测试建议。
+
+每个 eval 条目应包含：`id`, `prompt`, `expected_output` 文本说明，以及可选的 `files` 列表。示例 JSON 格式参见 `skill-creator` 的说明。
 
 这是一个为 Java 开发者量身定制的 `explain-code` 技能模板，帮助你用类比、流程图和逐步讲解把 Java 代码和架构讲清楚。
 

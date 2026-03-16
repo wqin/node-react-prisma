@@ -25,11 +25,16 @@ class BookControllerIntegrationTest {
     @BeforeEach
     void setup() {
         repo.deleteAll();
-        repo.save(new Book("A", "B", "C"));
+        repo.save(new Book("A", "B", "C", 1L));
     }
 
     @Test
     void list_returnsBooks() throws Exception {
-        mvc.perform(get("/api/books")).andExpect(status().isOk()).andExpect(jsonPath("$[0].title").value("A"));
+        mvc.perform(get("/api/books"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.content[0].title").value("A"))
+                .andExpect(jsonPath("$.data.content[0].number").value(1))
+                .andExpect(jsonPath("$.data.content[0].createTime").isNotEmpty())
+                .andExpect(jsonPath("$.data.content[0].updateTime").isNotEmpty());
     }
 }

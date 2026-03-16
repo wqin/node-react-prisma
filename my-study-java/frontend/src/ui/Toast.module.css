@@ -1,0 +1,18 @@
+.container {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1300;
+}
+.toast {
+  background: var(--surface);
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: var(--text);
+  box-shadow: var(--shadow-1);
+  min-width: 160px;
+  border-left: 4px solid var(--accent);
+}

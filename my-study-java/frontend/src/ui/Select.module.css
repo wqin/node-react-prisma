@@ -1,0 +1,7 @@
+.select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.04));
+  background: var(--glass);
+  color: var(--text);
+}

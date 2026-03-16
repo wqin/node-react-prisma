@@ -1,0 +1,38 @@
+.tableWrap {
+}
+.thead th {
+  text-align: left;
+  padding: 12px;
+  color: var(--muted);
+}
+.row {
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+.cell {
+  padding: 12px;
+}
+.tableWrap {
+  width: 100%;
+}
+.thead th {
+  text-align: left;
+  padding: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.row {
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 1px solid var(--border, rgba(255, 255, 255, 0.03));
+  transition: background 0.12s ease;
+}
+.row:hover {
+  background: linear-gradient(90deg, rgba(87, 176, 255, 0.03), transparent);
+}
+.cell {
+  padding: 12px;
+  vertical-align: middle;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+}

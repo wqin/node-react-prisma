@@ -1,15 +1,439 @@
+:root {
+  --bg: #0f1724;
+  --surface: #0b1220;
+  --muted: #99a0b3;
+  --text: #e6eef8;
+  --accent: #57b0ff;
+  --accent-2: #86f3c3;
+  --glass: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.04);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-1: 0 6px 18px rgba(2, 6, 23, 0.6);
+  --shadow-2: 0 10px 30px rgba(2, 6, 23, 0.75);
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
+  margin: 0;
+  min-width: 320px;
   font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial;
-  margin: 1rem;
+    "Avenir Next", "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, var(--bg), var(--bg-end) 60%);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    background 0.28s ease,
+    color 0.22s ease;
 }
-nav {
-  margin-bottom: 1rem;
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
-input {
-  margin-right: 0.5rem;
+
+.appShell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
 }
-button {
-  margin-left: 0.5rem;
+
+.ambientGlow {
+  position: fixed;
+  width: 32rem;
+  height: 32rem;
+  border-radius: 999px;
+  filter: blur(40px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.ambientGlow-left {
+  top: -8rem;
+  left: -10rem;
+  background: radial-gradient(
+    circle,
+    rgba(87, 176, 255, 0.34),
+    transparent 68%
+  );
+}
+
+.ambientGlow-right {
+  right: -12rem;
+  top: 8rem;
+  background: radial-gradient(
+    circle,
+    rgba(134, 243, 195, 0.28),
+    transparent 70%
+  );
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 22px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  box-shadow: var(--shadow-1);
+  backdrop-filter: blur(16px);
+}
+
+.appHeader {
+  position: sticky;
+  top: 18px;
+  z-index: 10;
+}
+
+.brandKicker,
+.eyebrow {
+  margin: 0 0 6px 0;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+
+.brandRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.brandTitle {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.brandPill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(134, 243, 195, 0.12);
+  color: var(--accent-2);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mainNav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mainNav a {
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition:
+    color 0.16s ease,
+    background 0.16s ease,
+    transform 0.16s ease;
+}
+
+.mainNav a:hover {
+  color: var(--accent);
+  background: rgba(87, 176, 255, 0.09);
+  transform: translateY(-1px);
+}
+
+.headerActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.appMain {
+  margin-top: 24px;
+}
+
+.pageShell {
+  display: grid;
+  gap: 18px;
+}
+
+.pageIntro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.pageIntro-books,
+.pageIntro-history,
+.homeHero {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(87, 176, 255, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.02)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 26px;
+  box-shadow: var(--shadow-2);
+}
+
+.pageHeading,
+.homeTitle {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.pageSubheading,
+.homeLead {
+  margin: 14px 0 0;
+  max-width: 720px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.ui-demo {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  min-width: 160px;
+}
+
+.panelCard,
+.systemCard {
+  overflow: hidden;
+}
+
+.bookFormGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  align-items: center;
+}
+
+.bookFormActions,
+.toolbarSearchGroup,
+.paginationControls,
+.paginationButtonGroup,
+.demoControlsRow,
+.homeActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tableSection,
+.historyTableWrap,
+.systemSection {
+  margin-top: 18px;
+}
+
+.paginationBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.paginationLeft {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.paginationLabel,
+.paginationInfo,
+.toolbarMeta,
+.mutedText,
+.history-entityMeta,
+.history-summaryHint,
+.metricText {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.paginationPage {
+  min-width: 82px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.toolbarRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.history-summaryCard,
+.booksSummaryCard,
+.metricCard {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  padding: 22px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+}
+
+.history-summaryLabel,
+.metricLabel {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent-2);
+}
+
+.history-summaryValue,
+.metricValue {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.history-opCell {
+  display: flex;
+  align-items: center;
+}
+
+.history-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.history-badge-create {
+  background: rgba(134, 243, 195, 0.14);
+  color: #73efb7;
+}
+
+.history-badge-update {
+  background: rgba(87, 176, 255, 0.14);
+  color: #7cc2ff;
+}
+
+.history-badge-delete {
+  background: rgba(255, 136, 136, 0.14);
+  color: #ff9c9c;
+}
+
+.history-entityTitle {
+  font-weight: 700;
+}
+
+.history-detail {
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.homeHero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  gap: 18px;
+}
+
+.homeHeroContent {
+  display: grid;
+  align-content: center;
+}
+
+.homeMetricGrid {
+  display: grid;
+  gap: 14px;
+}
+
+.metricCard.accent {
+  background: linear-gradient(
+    145deg,
+    rgba(87, 176, 255, 0.16),
+    rgba(134, 243, 195, 0.08)
+  );
+}
+
+.systemCardHeader,
+.demoControls {
+  display: grid;
+  gap: 12px;
+}
+
+@media (max-width: 960px) {
+  .header,
+  .pageIntro,
+  .homeHero {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    align-items: flex-start;
+  }
+
+  .mainNav,
+  .headerActions {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 16px;
+  }
+
+  .header,
+  .pageIntro-books,
+  .pageIntro-history,
+  .homeHero,
+  .history-summaryCard,
+  .booksSummaryCard {
+    padding: 18px;
+  }
+
+  .ui-demo {
+    width: 100%;
+  }
+
+  .ui-demo > * {
+    flex: 1 1 auto;
+  }
 }
